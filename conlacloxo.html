@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Con lắc lò xo</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<style>
+  body {
+    background: #ffffff url("anh/loxo.jpg") no-repeat fixed center; 
+    background-size: 100%;
+  }
+  .image1 {
+    display: inline-block;
+    margin-left: 20px;
+    border: 2px solid #000000;
+    cursor: pointer;
+  }
+
+  .image {
+  margin-left: 264px; /* Thay đổi giá trị 10px tùy ý */
+  border: 2px solid #000000;
+  cursor: pointer;
+  }
+  .button0 {
+            display: inline-block;
+            justify-content:center;
+            align-items: center;
+            width: auto;
+            height: 20px;
+            border-radius:2px;
+            padding: 10px 20px;
+            margin-left: 20px;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            cursor: pointer;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid black;
+        }
+/*D:/CODE/YOUNG/giải lí/*/
+</style>
+<body>
+    <h1></h1>
+    <div class="button0" onclick="window.location.href = 'trangchu.html';">TRANG CHỦ</div>
+    <div class="button0" onclick="window.location.href = 'lop10.html';">LỚP 10</div>
+    <div class="button0" onclick="window.location.href = 'lop11.html';">LỚP 11/12</div><br><br>
+
+    <div id="inputs">
+        <label for="mass">Khối lượng (kg): </label>
+        <input type="number" id="mass"><br>
+
+        <label for="stiffness">Độ cứng (N/m): </label>
+        <input type="number" id="stiffness"><br>
+
+        <label for="tansogoc">Tần số gốc (Rad/s): </label>
+        <input type="number" id="tansogoc"><br>
+
+        <label for="chuki">Chu kì (s): </label>
+        <input type="number" id="chuki"><br>
+
+        <label for="tanso">Tần số (Hz): </label>
+        <input type="number" id="tanso"><br>
+
+        <button id="button1" onclick="window.location.href = 'https://openclassroom.edu.vn/physicslab/damped-shm/';">Đến thí nghiệm ảo</button>
+
+        <button onclick="conlacloxo()">Tính toán</button>
+       
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Simple_harmonic_oscillator.gif" alt="Hình ảnh" style="display: inline-block; width: auto; height: 200px;" >
+        <div style=" padding: 1px; margin-left: 455px; display: inline-block;" >
+          <div id="result" style="z-index: 2;"></div>
+        </div>
+      </div>
+
+    </div>
+    
+    <script >
+     function conlacloxo() {
+    var cannang = (parseFloat(document.getElementById("mass").value) || 0);
+    var docung = (parseFloat(document.getElementById("stiffness").value) || 0);
+    var tansogoc = (parseFloat(document.getElementById("tansogoc").value) || 0);
+
+    var chuki = (parseFloat(document.getElementById("chuki").value) || 0);
+    var tanso = (parseFloat(document.getElementById("tanso").value)||0);
+    
+    var dsbd=[cannang,docung,tansogoc,chuki,tanso];
+    var k1=0;
+    for (i=0;i<dsbd.length;i++){
+      if (dsbd[i]!==0){
+        k1++;
+      }
+    }
+    if(k1===0){
+      alert("Không thể để dữ liệu trống")
+      document.getElementById("result").innerHTML ="";
+    }
+    else if(k1===1 &&(cannang!==0 || docung!==0)){
+      alert("Không đủ dữ liệu để tính toán!")
+      document.getElementById("result").innerHTML ="";
+    }
+    else{
+    for (let i=0; i<10; i++) {
+        if (docung!==0 && cannang!==0 && (tansogoc===0 || tansogoc===undefined)) {
+            tansogoc = Math.sqrt(docung / cannang);
+        } 
+        
+        if (tansogoc!==0 && cannang!==0 && (docung===0 || docung===undefined)){
+            docung=(tansogoc**2)*cannang
+        }
+        
+        if (docung!==0 && tansogoc!==0 && (cannang===0 || cannang===undefined)) {
+            cannang=(docung/(tansogoc**2))
+        }
+        
+        if (tansogoc!==0 && cannang!==0 && (docung===0 || docung===undefined)){
+            docung=(cannang*(tansogoc**2))
+        }
+
+        if (tansogoc!==0) {
+            chuki = 2 * Math.PI / tansogoc;
+            tanso = 1/chuki
+        }
+
+        if (chuki!==0) {
+            tansogoc=(2*Math.PI)/chuki
+        }
+
+        if (tanso!==0) {
+            tansogoc=(2*Math.PI)*tanso
+        }
+    }
+    var dsc=[cannang,docung,tansogoc,chuki,tanso];
+    console.log(dsbd,dsc);
+    let x=0;
+    for (i=0;i<4;i++){
+      if((dsbd[i]!==0 && dsc[i]!==0) && (dsbd[i]!==dsc[i])){
+          x+=1;
+          break;
+      }
+
+    }
+    if (x!=0){
+      alert("Mâu thuẩn dữ liệu!")
+      document.getElementById("result").innerHTML ="";
+    }
+    else{
+      document.getElementById("result").innerHTML = "Cân nặng: " + cannang.toFixed(2) + " kg <br> Độ cứng: "+ docung.toFixed(2) + " N/m <br> Tần số góc: " + tansogoc.toFixed(2) + " rad/s <br> Chu kỳ: " + chuki.toFixed(2) + " s <br> Tần số :" + tanso.toFixed(2) + " Hz " ;
+}}}
+    </script>
+</body>
+</html>

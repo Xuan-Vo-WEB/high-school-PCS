@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thí nghiệm tổng hợp hai lực đồng đồng quy</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>  
+<style>
+    body {
+        background: #ffffff url("anh/hailucdongquy.jpg") no-repeat fixed center; 
+        background-size: 100%;
+    }
+    select {
+        width: 50px; /* Độ rộng của ô select */
+        height: 25px; /* Độ cao của ô select */
+        margin-top: 5px;
+        font-size: 18px; /* Cỡ chữ của ô select */
+        font-family: 'Times New Roman', Times, serif;
+    }
+    input {
+        height: 20px;
+        
+        display: inline-block;
+    }
+
+    .box{
+        display: inline-block;
+        justify-content:center;
+        align-items: center;
+        width: 100px;
+        border: none;
+        font-family: 'Times New Roman', Times, serif, Helvetica, sans-serif;
+        font-weight: bold;
+        text-align: center;
+        margin-left: 20px;
+    }
+    li{
+        margin-top: -10px;
+    }
+    .button0 {
+            display: inline-block;
+            justify-content:center;
+            align-items: center;
+            width: auto;
+            height: 20px;
+            border-radius:2px;
+            padding: 10px 20px;
+            margin-left: 20px;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            cursor: pointer;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid black;
+        }
+/*D:/CODE/YOUNG/giải lí/*/
+</style>
+<body>
+    <div class="button0" onclick="window.location.href = 'trangchu.html';">TRANG CHỦ</div>
+    <div class="button0" onclick="window.location.href = 'lop10.html';">LỚP 10</div>
+    <div class="button0" onclick="window.location.href = 'lop11.html';">LỚP 11/12</div><br><br>
+    <div id="inputs">
+        <label type="margin-top:10px">Góc tạo bởi hai nhánh dây(α): </label>
+        <input width="400px" type="number"  id="a">(Độ)<br>
+        
+        <label>Nhập độ lớn lực F1 (bắt buộc): </label>
+        <input type="number" id="f1">(N)<br>
+        <label>Nhập độ lớn lực F2 (bắt buộc): </label>
+        <input type="number" id="f2">(N)<br>
+        <label >Nhập độ lớn lực tổng hợp(F):</label>
+        <input type="number" id="f">(N)
+
+        <button onclick="hailucdongquy()" type="margin-top: -100px">Tính toán</button>
+        <button id="button1" onclick="window.location.href = 'https://openclassroom.edu.vn/physicslab/equilibrium-of-three-forces/';">Đến thí nghiệm ảo</button>
+        <img src="anh/z5284371028803_f733e6f8f28dd81311c79955b7307fed.jpg">
+        
+        <div style=" padding: 1px; margin-left: 0px; display: inline-block; display: flex;justify-content: center;align-items: center;" >
+            <div id="result" style="z-index: 2;"></div>
+        </div>
+        <script>
+            function hailucdongquy() {
+                var a=(parseFloat(document.getElementById("a").value)||0);
+                
+                var anpha=a*((Math.PI)/180);
+                
+                var f1=(parseFloat(document.getElementById("f1").value)||0);
+                var f2=(parseFloat(document.getElementById("f2").value)||0);
+                var f=(parseFloat(document.getElementById("f").value)||0);
+                const dsbd=[a.toFixed(0),f.toFixed(0),f1.toFixed(0),f2.toFixed(0)]
+                let t=0;
+                    if(a===0){t+=1}
+                    if(f===0){t+=1}
+                    if(f1===0){t+=1}
+                    if(f2===0){t+=1}
+
+                if (f1===0 && f2===0 && f===0 && a===0){
+                    alert("Không thể tính toán với dữ liệu trống")
+                }
+                else if(t>1){
+                    alert("Dữ liệu chưa đủ để tính toán")
+                }
+                else{
+                for ( i=0;i<3;i++){
+                    if(anpha!==0 && f2!==0 && f1!==0){
+                        f=Math.sqrt(f1**2 + f2**2 + 2*f1*f2*Math.cos(anpha));
+                    }
+                    if (f2!==0 && f1!==0 && f!==0){
+                        anpha=Math.acos((f**2-f1**2-f2**2)/(2*f1*f2));
+                    }
+                    
+                    if (f1!==0 && a===90 && f!==0){
+                        f2=(f**2-f1**2)**(1/2);
+                    }
+                    if (f2!==0 && Math.cos(anpha)===0 && f!==0){
+                        f1=(f**2-f2**2)**(1/2);
+                    }
+                }
+
+                a=anpha*(180/(Math.PI))
+                const dsc=[a.toFixed(0),f.toFixed(0),f1.toFixed(0),f2.toFixed(0)]
+                let x=0;
+                for (i=0;i<4;i++){
+                    if((dsbd[i]!=="0" && dsc[i]!=="0") && (dsbd[i]!==dsc[i])){
+                        x+=1;
+                        break;
+                    }
+
+                }
+                if (x!=0){
+                    alert("Mâu thuẩn dữ liệu!")
+                    document.getElementById("result").innerHTML=" ";
+                }
+                else{
+                    document.getElementById("result").innerHTML= "Góc tạo bởi hai nhánh dây(\u0061): "+a.toFixed(3)+" Độ <br> Lực F1: "+f1+
+                    " N <br> Lực F2: "+f2+" N <br> LỰC TỔNG HỢP: "+f.toFixed(3)+" N";}
+                
+            }}
+        </script>
+    </div> 
+    
+</body>
+</html>

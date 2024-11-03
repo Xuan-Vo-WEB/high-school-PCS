@@ -1,0 +1,181 @@
+ư<!DOCTYPE html>
+<html>
+<head>
+    <title>Ma sát trượt</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>  
+<style>
+    body {
+        background: #ffffff url("anh/ma sát trượt.jpg") no-repeat fixed center;
+        background-size: 100%;
+    }
+    select {
+        width: 50px; /* Độ rộng của ô select */
+        height: 25px; /* Độ cao của ô select */
+        margin-top: 5px;
+        font-size: 18px; /* Cỡ chữ của ô select */
+        font-family: 'Times New Roman', Times, serif;
+    }
+    input {
+        height: 20px;
+       
+        display: inline-block;
+    }
+
+
+    .box{
+        display: inline-block;
+        justify-content:center;
+        align-items: center;
+        width: 100px;
+        border: none;
+        font-family: 'Times New Roman', Times, serif, Helvetica, sans-serif;
+        font-weight: bold;
+        text-align: center;
+        margin-left: 20px;
+    }
+    li{
+        margin-top: -10px;
+    }
+    .button0 {
+            display: inline-block;
+            justify-content:center;
+            align-items: center;
+            width: auto;
+            height: 20px;
+            border-radius:2px;
+            padding: 10px 20px;
+            margin-left: 20px;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            cursor: pointer;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid black;
+        }
+        select {
+        width: 200px; /* Độ rộng của ô select */
+        height: 25px; /* Độ cao của ô select */
+        margin-top: 5px;
+        font-size: 18px; /* Cỡ chữ của ô select */
+        font-family: 'Times New Roman', Times, serif;
+        }
+/*D:/CODE/YOUNG/giải lí/*/
+</style>
+<body>
+    <div class="button0" onclick="window.location.href = 'trangchu.html';">TRANG CHỦ</div>
+    <div class="button0" onclick="window.location.href = 'lop10.html';">LỚP 10</div>
+    <div class="button0" onclick="window.location.href = 'lop11.html';">LỚP 11/12</div><br><br>
+    <label style="font-size: 20px; -webkit-text-fill-color: red;">*Lưu ý* Nếu muốn hệ thống nhận giá trị hệ số ma sát mà bạn nhập vào vui lòng để giá trị None ở bảng chọn
+
+    </label><br><br>
+    <div id="inputs">
+        <label type="margin-top:10px">Chọn vật liệu hoặc nhập hệ số ma sát trượt:</label>
+        <input width="400px" type="number"  id="p">
+        <select id="vl" name="unit">
+            <option value="non">NONE</option>
+            <option value="csbtk">Cao su - bê tông khô</option> 
+            <option value="csbtu">Cao su - bê tông ướt</option>
+            <option value="gg">Gỗ - gỗ</option>
+            <option value="ndnd">Nước đá - nước đá</option>
+            
+        </select><br>
+       
+        <label> Nhập độ lớn lực tác dụng (N)</label>
+        <input type="number" id="N"><br>
+        <label>Nhập độ lớn lực ma sát trượt (F): </label>
+        <input type="number" id="F">
+
+
+        <button onclick="masattruot()" type="margin-top: -100px">Tính toán</button>
+        <div style=" padding: 1px; margin-left: 0px; display: inline-block; display: flex;justify-content: center;align-items: center;" >
+            <div id="result" style="z-index: 2;"></div>
+        </div>
+        <script>
+            function masattruot() {
+                var HSMST = (parseFloat(document.getElementById("p").value)||0);
+                var ĐLLTD = (parseFloat(document.getElementById("N").value)||0);
+                var ĐLLMST = (parseFloat(document.getElementById("F").value)||0);
+                var vl= (document.getElementById("vl").value||0);
+                if (vl!==0){
+                    switch (vl){
+                        case "csbtk":
+                            HSMST=0.7;
+                            break;
+                        case "csbtu":
+                            HSMST=0.5;
+                            break;
+                        case "gg":
+                            HSMST=0.2;
+                            break;
+                        case "ndnd":
+                            HSMST=0.03;
+                            break;
+                        case "NONE":
+                            break;
+                    }
+                }
+                var ds=[HSMST,ĐLLTD,ĐLLMST];
+                let dem=0;
+                for(i=0;i<ds.length;i++){
+                    if (ds[i]===0){dem+=1}
+                }
+                if(dem>1){alert("Không đủ dữ liệu!")}
+                else{
+
+                if(HSMST !==0 && ĐLLTD !==0  ) {
+                    ĐLLMST = HSMST * ĐLLTD
+                }
+                if(HSMST !==0 && ĐLLMST !==0) {
+                    ĐLLTD = ĐLLMST / HSMST
+                }
+                if(ĐLLTD !==0 && ĐLLMST !==0) {
+                    HSMST = ĐLLMST / ĐLLTD
+                }
+                var ds1=[]
+                if (HSMST===0.7){
+                    ds1.push("Cao su - bê tông khô")
+                }
+                else if (HSMST===0.5){
+                    ds1.push("Cao su - bê tông ướt")
+                }
+                else if (HSMST===0.2){
+                    ds1.push("Gỗ - gỗ")
+                }
+                else if (HSMST===0.03){
+                    ds1.push("Mước đá - nước đá")
+                }
+                else{
+                    ds1.push("Không xác định")
+                }
+                var dskq=[HSMST,ĐLLTD,ĐLLMST];
+                console.log(ds,dskq)
+                let x=0;
+                for (i=0;i<4;i++){
+                    if((ds[i]!==0 && dskq[i]!==0) && (ds[i]!==dskq[i])){
+                        x+=1;
+                        break;
+                    }
+
+                }
+                if (x!=0){
+                    alert("Mâu thuẩn dữ liệu!");
+                    document.getElementById("result").innerHTML=" ";
+                }
+                else{
+                document.getElementById("result").innerHTML="Hệ số ma sát trượt là : " +HSMST.toFixed(3) + "<br> Độ lớn lực tác dụng là :" +ĐLLTD.toFixed(3) +
+                 " N <br> Độ lớn ma sát trượt là :"+ĐLLMST.toFixed(3)+" N <br> Vật liệu được sử dụng là: "+ds1;
+            }
+            }
+        }
+       
+        </script>
+    </div>
+   
+</body>
+</html>
+

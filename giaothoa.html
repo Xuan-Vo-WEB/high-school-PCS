@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GIAO THOA</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>  
+<style>
+    body {
+        background: #ffffff url("anh/giaothoa.jpg") no-repeat fixed center; 
+        background-size: 100%;
+    }
+    .image1 {
+        display: inline-block;
+        margin-left: 20px;
+        border: 2px solid #000000;
+        cursor: pointer;
+    }
+
+    .image {
+        margin-left: 264px; /* Thay đổi giá trị 10px tùy ý */
+        border: 2px solid #000000;
+        cursor: pointer;
+    }
+    select {
+        width: 50px; /* Độ rộng của ô select */
+        height: 25px; /* Độ cao của ô select */
+        margin-top: 5px;
+        font-size: 18px; /* Cỡ chữ của ô select */
+        font-family: 'Times New Roman', Times, serif;
+    }
+    input {
+        height: 20px;
+    }
+    .button0 {
+            display: inline-block;
+            justify-content:center;
+            align-items: center;
+            width: auto;
+            height: 20px;
+            border-radius:2px;
+            padding: 10px 20px;
+            margin-left: 20px;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            cursor: pointer;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+/*D:/CODE/YOUNG/giải lí/*/
+</style>
+<body>
+    
+    <h1></h1>
+    <div class="button0" onclick="window.location.href = 'trangchu.html';">TRANG CHỦ</div>
+    <div class="button0" onclick="window.location.href = 'lop10.html';">LỚP 10</div>
+    <div class="button0" onclick="window.location.href = 'lop11.html';">LỚP 11/12</div><br><br>
+
+    <div id="inputs">
+        <label for="lamda">Bước sóng : </label>
+        
+        <input type="number" id="lamda">
+        <select id="ulamda">
+            <option value="m">m</option> 
+            <option value="cm">cm</option>
+            <option value="mm">mm</option>
+            <option value="µm">µm</option>
+        </select>
+        
+        <br>
+
+        <label for="a">Khoảng cách giữa 2 khe : </label>
+        <input type="number" id="a">
+        <select id="ua" name="unit">
+            <option value="m">m</option> 
+            <option value="cm">cm</option>
+            <option value="mm">mm</option>
+            <option value="µm">µm</option>
+        </select>
+        <br>
+
+        <label for="i">Khoảng vân : </label>
+        <input type="number" id="i">
+        <select id="ui" name="unit">
+            <option value="m">m</option> 
+            <option value="cm">cm</option>
+            <option value="mm">mm</option>
+            <option value="µm">µm</option>
+        </select>
+        <br>
+
+        <label for="D">Khoảng cách từ 2 khe đến màn: </label>
+        <input type="number" id="D">
+        <select id="uD" name="unit1">
+            <option value="m">m</option> 
+            <option value="cm">cm</option>
+            <option value="mm">mm</option>
+            <option value="µm">µm</option>
+        </select>
+        <br>
+
+        <label for="l">Thứ tự vân sáng: </label>
+        <input type="number" id="k1"><br>
+        <label for="l">Thứ tự vân tối: </label>
+        <input type="number" id="k2"><br>
+
+        <button id="button1" onclick="window.location.href = 'https://openclassroom.edu.vn/physicslab/water-wave-interference/';">Đến thí nghiệm ảo</button>
+
+        <button onclick="giaothoa()">Tính toán</button>
+        
+
+        
+        
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Two_sources_interference.gif" alt="Hình ảnh" style="width: auto; height: 200px; display: inline-block;">
+        <div style=" padding: 1px; margin-left: 250px; display: inline-block;" >
+            <div id="result" style="z-index: 2;"></div>
+        </div>
+        
+    </div>
+
+    
+
+    <script >
+        function giaothoa() {
+            function convertValue(value,unit) {
+                // Lấy giá trị và đơn vị từ các phần tử HTML
+                
+                // Kiểm tra nếu giá trị và đơn vị hợp lệ
+                    switch (unit) {
+                        case "cm":
+                            value *= 10; // Chuyển đổi thành mm
+                            break;
+                        case "µm":
+                            value /= 1000; // Chuyển đổi thành mm
+                            break;
+                        case "m":
+                            value *= 1000; // Chuyển đổi thành mm
+                            break;
+                    // Thêm các trường hợp chuyển đổi khác tương ứng với đơn vị bạn muốn
+                    }
+                
+                return value;
+            }   
+            var lamda = (parseFloat(document.getElementById("lamda").value) || 0);
+            var ulamda = document.getElementById("ulamda").value;
+            var lamda = (convertValue(lamda,ulamda) || 0);
+            var a = (parseFloat(document.getElementById("a").value) || 0);
+            var ua = document.getElementById("ua").value;
+            var a = (convertValue(a,ua) || 0);
+            var i = (parseFloat(document.getElementById("i").value) || 0);
+            var ui = document.getElementById("ui").value;
+            var i = (convertValue(i,ui) ||0);
+            var D = (parseFloat(document.getElementById("D").value) || 0);
+            var uD = document.getElementById("uD").value;
+            var D = (convertValue(D,uD) || 0);
+            var ks=(parseFloat(document.getElementById("k1").value)||0);
+            var kt=(parseFloat(document.getElementById("k2").value)||0);
+            var xs=0;
+            var xt=0;
+            var dsdv=[lamda,a,i,D,xs,xt];
+            for (let j=2; j<8; j++) {
+                if (i!==0 && a!==0 && D!==0 ) {
+                    lamda = (i*a)/D;
+                } 
+                
+                if (i!==0 && a!==0 && lamda!==0 ) {
+                    D = (i*a)/lamda;
+                }
+                
+                if (lamda!==0 && a!==0 && D!==0 ) {
+                    i = (lamda*D)/a;
+                }
+                
+                if (i!==0 && lamda!==0 && D!==0 ) {
+                    a=(lamda*D)/i;
+                }
+                if (kt!==0 && (i!==0 || (lam*D)/a!==0)){
+                    xt=((kt+1/2)*i || (kt+1/2)*((lamda*D)/a));
+                }  
+                if (ks!==0 && (i!==0 || (lam*D)/a!==0)){
+                    xs= (ks*i || ks*((lam*D)/a));
+                }
+
+                /*if (k!==0 && (i!==0 || (lam*D)/a!==0)){
+                    if(k1!==k) {
+                        xt= ((k+1/2)*i || (k+1/2)*((lamda*D)/a));
+                    }
+                    else{
+                        xs= (k*i || k*((lam*D)/a));
+                    }
+                }*/
+            }
+            var dsdr=[lamda,a,i,D,xs,xt];
+            let k1=0;
+                let k2=0;
+                let k3=0;
+                
+                console.log(dsdv);
+                console.log(dsdr);
+                for (k=0; k<dsdr.length; k++){
+                    if (String(dsdv[k])!=="0"){k1+=1}
+                    if (String(dsdv[k])==="0" && String(dsdr[k])!=="0"){k2++}
+                    if (String(dsdv[k])!==String(dsdr[k]) && String(dsdv[k])!=="0"){
+                        k3++;
+                    }
+                }
+                if (k1===0){
+                    alert("Không thể để dữ liệu trống!")
+                    document.getElementById("result").innerHTML="";
+                }
+                else if(k2===0 && k1<3){
+                    alert("Không đủ dữ liệu để tính toán!")
+                    document.getElementById("result").innerHTML="";
+                }
+                else if(k3!==0){
+                    alert("Mâu thuẫn dữ liệu")
+                    document.getElementById("result").innerHTML="";
+                }
+                else{
+            document.getElementById("result").innerHTML = "Bước sóng: "+ lamda +"mm <br> Khoảng cách giữa 2 khe: " + a +"mm <br> Khoảng vân: " + i +"mm <br> Khoảng cách từ 2 Khe đến màn: " + D +"mm <br> Vị trí vân sáng: " + xs +"mm <br> Vị trí vân tối: "+ xt +"mm";
+        }}
+    </script>
+</body>
+</html>

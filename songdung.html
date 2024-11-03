@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SÓNG DỪNG</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>  
+<style>
+    body {
+        background: #ffffff url("anh/songdung.jpg") no-repeat fixed center; 
+        background-size: 100%;
+    }
+    select {
+        width: 50px; /* Độ rộng của ô select */
+        height: 25px; /* Độ cao của ô select */
+        margin-top: 5px;
+        font-size: 18px; /* Cỡ chữ của ô select */
+        font-family: 'Times New Roman', Times, serif;
+    }
+    input {
+        height: 20px;
+    }
+    .button0 {
+            display: inline-block;
+            justify-content:center;
+            align-items: center;
+            width: auto;
+            height: 20px;
+            border-radius:2px;
+            padding: 10px 20px;
+            margin-left: 20px;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            cursor: pointer;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid black;
+        }
+</style>
+<body>
+    
+    <h1></h1>
+    <div class="button0" onclick="window.location.href = 'trangchu.html';">TRANG CHỦ</div>
+    <div class="button0" onclick="window.location.href = 'lop10.html';">LỚP 10</div>
+    <div class="button0" onclick="window.location.href = 'lop11.html';">LỚP 11/12</div><br><br>
+
+    <div id="inputs">
+        <label for="L">Độ dài sợi dây: </label>
+        <input type="number" id="L">
+        <select id="uL">
+            <option value="m">m</option> 
+            <option value="cm">cm</option>
+            <option value="mm">mm</option>
+            <option value="µm">µm</option>
+        </select>
+        <br>
+
+        <label for="n">Số bụng sóng: </label>
+        <input type="number" id="n">
+        <br>
+
+        <label for="lamda">Bước sóng: </label>
+        <input type="number" id="lamda">
+        <select id="ulamda" name="unit">
+            <option value="m">m</option> 
+            <option value="cm">cm</option>
+            <option value="mm">mm</option>
+            <option value="µm">µm</option>
+        </select>
+        <br>
+
+        <label for="v">Vận tốc truyền sóng: </label>
+        <input type="number" id="v">
+        <select id="uv">
+            <option value="m/s">m/s</option> 
+            <option value="cm/s">cm/s</option>
+        </select>
+        <br>
+
+        <label for="f">Tần số: </label>
+        <input type="number" id="f">
+        <label for="f">Hz </label><br>
+
+        <button id="button1" onclick="window.location.href = 'https://openclassroom.edu.vn/physicslab/standing-wave-2/';">Đến thí nghiệm ảo</button>
+        <button onclick="songdungcd()" style="display: inline-block;">Sóng dừng hai đầu cố định</button>
+        <button onclick="songdungtd()" style="display: inline-block;">Sóng dừng một đầu tự do</button></br>
+
+        <img src="anh/ezgif.com-video-to-gif-converter.gif" alt="Hình ảnh" style="width: auto; height: 200px; display: inline-block;">
+        <div style=" padding: 1px; margin-left: 355px; display: inline-block;" >
+            <div id="result" style="z-index: 2;"></div>
+        </div>
+        
+    </div>
+
+    
+
+    <script >
+        //Sóng dừng
+function songdungcd() {
+    function convertValue(value,unit) {
+        // Lấy giá trị và đơn vị từ các phần tử HTML
+        
+        // Kiểm tra nếu giá trị và đơn vị hợp lệ
+            switch (unit) {
+                case "mm":
+                    value /= 10; // Chuyển đổi thành cm
+                    break;
+                case "µm":
+                    value /= 10000; // Chuyển đổi thành cm
+                    break;
+                case "m":
+                    value *= 100; // Chuyển đổi thành cm
+                    break;
+            // Thêm các trường hợp chuyển đổi khác tương ứng với đơn vị bạn muốn
+            }
+        
+        return value;
+    }   
+    var l = (parseFloat(document.getElementById("L").value) || 0);
+    var ul = document.getElementById("uL").value;
+    var l = (convertValue(l,ul) || 0);
+    var n1=(parseFloat(document.getElementById("n").value) || 0);
+    var lamda = (parseFloat(document.getElementById("lamda").value) || 0);
+    var ulamda = document.getElementById("ulamda").value;
+    var lamda = (convertValue(lamda,ulamda) || 0);
+    var v = (parseFloat(document.getElementById("v").value) || 0);
+    var uv = document.getElementById("uv").value;
+    var f=(parseFloat(document.getElementById("f").value) || 0);
+    switch (uv) {
+        case "m/s":
+            v *= 100;
+            break;
+    }
+    var T=0;
+    var dsdv=[l,n1,lamda,v,f,T];
+    for (let j=2; j<8; j++) {
+        if (lamda!==0 && n1!==0 ){
+            l=n1*(lamda/2);
+        }
+        if (v!==0 && f!==0 && n1!==0 ){
+            l=n1*(v/(2*f));
+        }
+        if (v!==0 && f!==0 ){
+            lamda=v/f;
+        }
+        if (v!==0 && l!==0 && n1!==0 ){
+            f=(n1*v)/(2*l);
+        }
+        if (l!==0 && n1!==0 ){
+            lamda=(2*l)/n1;
+        }
+        if ((f!==0 ||(lamda!==0 && v!==0)) ){
+            T=(1/f)||(lamda/v);
+        }
+    }
+    var dsdr=[l,n1,lamda,v,f,T];
+    let k1=0;
+                let k2=0;
+                let k3=0;
+                
+                console.log(dsdv);
+                console.log(dsdr);
+                for (k=0; k<dsdr.length; k++){
+                    if (String(dsdv[k])!=="0"){k1+=1}
+                    if (String(dsdv[k])==="0" && String(dsdr[k])!=="0"){k2++}
+                    if (String(dsdv[k])!==String(dsdr[k]) && String(dsdv[k])!=="0"){
+                        k3++;
+                    }
+                }
+                if (k1===0){
+                    alert("Không thể để dữ liệu trống!")
+                    document.getElementById("result").innerHTML="";
+                }
+                else if(k2===0 && k1<3){
+                    alert("Không đủ dữ liệu để tính toán!")
+                    document.getElementById("result").innerHTML="";
+                }
+                else if(k3!==0){
+                    alert("Mâu thuẫn dữ liệu")
+                    document.getElementById("result").innerHTML="";
+                }
+                else{
+    document.getElementById("result").innerHTML =  "Độ dài sợi dây: "+ l +"cm <br> Bước sóng: " + lamda +"cm <br> vận tốc truyền sóng: " + v +"cm <br> Tần số: " + f +"Hz <br> ";    
+
+}}
+
+function songdungtd() {
+    function convertValue(value,unit) {
+        // Lấy giá trị và đơn vị từ các phần tử HTML
+        
+        // Kiểm tra nếu giá trị và đơn vị hợp lệ
+            switch (unit) {
+                case "mm":
+                    value /= 10; // Chuyển đổi thành cm
+                    break;
+                case "µm":
+                    value /= 10000; // Chuyển đổi thành cm
+                    break;
+                case "m":
+                    value *= 100; // Chuyển đổi thành cm
+                    break;
+            // Thêm các trường hợp chuyển đổi khác tương ứng với đơn vị bạn muốn
+            }
+        
+        return value;
+    }   
+    var l = (parseFloat(document.getElementById("L").value) || 0);
+    var ul = document.getElementById("uL").value;
+    var l = (convertValue(l,ul) || 0);
+    var n1=(parseFloat(document.getElementById("n").value) || 0);
+    var lamda = (parseFloat(document.getElementById("lamda").value) || 0);
+    var ulamda = document.getElementById("ulamda").value;
+    var lamda = (convertValue(lamda,ulamda) || 0);
+    var v = (parseFloat(document.getElementById("v").value) || 0);
+    var uv = document.getElementById("uv").value;
+    var f=(parseFloat(document.getElementById("f").value) || 0);
+    switch (uv) {
+        case "m/s":
+            v *= 100;
+            break;
+    }
+    var T=0;
+    var n=0;
+    var dsdv=[l,n,lamda,v,f,T];
+
+    for (let j=2; j<8; j++) {
+        if (lamda!==0 && n1!==0 ){
+            n= 2*(n1-1)+1
+            l=n*(lamda/4);
+        }
+        if (v!==0 && f!==0 && n1!==0 ){
+            n= 2*(n1-1)+1
+            l=n*(v/(4*f));
+        }
+        if (v!==0 && f!==0 ){
+            lamda=v/f;
+        }
+        if (v!==0 && l!==0 && n1!==0 ){
+            n= 2*(n1-1)+1
+            f=(n*v)/(4*l);
+        }
+        if (l!==0 && n1!==0 ){
+            n= 2*(n1-1)+1
+            lamda=(4*l)/n;
+        }
+        if ((f!==0 ||(lamda!==0 && v!==0)) ){
+            T=(1/f)||(lamda/v);
+        }
+    }
+    var dsdr=[l,n,lamda,v,f,T];
+    let k1=0;
+                let k2=0;
+                let k3=0;
+                
+                console.log(dsdv);
+                console.log(dsdr);
+                for (k=0; k<dsdr.length; k++){
+                    if (String(dsdv[k])!=="0"){k1+=1}
+                    if (String(dsdv[k])==="0" && String(dsdr[k])!=="0"){k2++}
+                    if (String(dsdv[k])!==String(dsdr[k]) && String(dsdv[k])!=="0"){
+                        k3++;
+                    }
+                }
+                if (k1===0){
+                    alert("Không thể để dữ liệu trống!")
+                    document.getElementById("result").innerHTML="";
+                }
+                else if(k2===0 && k1<3){
+                    alert("Không đủ dữ liệu để tính toán!")
+                    document.getElementById("result").innerHTML="";
+                }
+                else if(k3!==0){
+                    alert("Mâu thuẫn dữ liệu")
+                    document.getElementById("result").innerHTML="";
+                }
+                else{
+    document.getElementById("result").innerHTML =  "Độ dài sợi dây: "+ l +"cm <br> Bước sóng: " + lamda +"cm <br> vận tốc truyền sóng: " + v +"cm <br> Tần số: " + f +"Hz <br> ";    
+
+}}
+
+
+    </script>
+</body>

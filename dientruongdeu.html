@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Điện trường đều</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<style>
+    body {
+        background: #ffffff url("anh/DIENTRUONGDEU.jpg") no-repeat fixed center;
+        background-size: 100%;
+    }
+
+    select {
+        width: 50px;
+        /* Độ rộng của ô select */
+        height: 25px;
+        /* Độ cao của ô select */
+        margin-top: 5px;
+        font-size: 18px;
+        /* Cỡ chữ của ô select */
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    input {
+        height: 20px;
+
+        display: inline-block;
+    }
+
+    .button0 {
+        display: inline-block;
+        justify-content: center;
+        align-items: center;
+        width: auto;
+        height: 20px;
+        border-radius: 2px;
+        padding: 10px 20px;
+        margin-left: 20px;
+        background-color: #ffffff;
+        color: #000000;
+        border: none;
+        cursor: pointer;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        border: 1px solid black;
+    }
+
+    /*D:/CODE/YOUNG/giải lí/*/
+</style>
+
+<body>
+    <div class="button0" onclick="window.location.href = 'trangchu.html';">TRANG CHỦ</div>
+    <div class="button0" onclick="window.location.href = 'lop10.html';">LỚP 10</div>
+    <div class="button0" onclick="window.location.href = 'lop11.html';">LỚP 11/12</div><br><br>
+    <p style="font-size: 17pt;">*Lưu ý*: Cách tính chỉ áp dụng cho điện tích của electron
+        <br>và cho 2 bản phẳng theo thứ tự là dương ở trên và âm ở dưới!
+    </p>
+    <p style="margin-top: -20px; margin-bottom: 15px; font-size: 17pt;">Do đó nếu 2 bản phẳng của bạn có thứ tự ngược
+        lại xin hãy đổi dấu kết quả cuối cùng!</p>
+    <p
+        style="font-size: 17pt; -webkit-text-fill-color: red; display: inline-block; margin-top: -60px; margin-bottom: -60px;">
+        Nếu muốn nhập giá trị dạng
+        <img src="gioithieu/a.jpg" style="width: 50px; height: auto; display: inline-block; font-size: 17pt;" alt="">
+        thì bạn hãy nhập
+    <p
+        style="font-style: italic; font-weight: bold; display: inline-block; font-size: 17pt; margin-left: 5px; margin-top: -60px; margin-bottom: -60px;">
+        x10^x
+    </p>
+    <p
+        style=" display: inline-block; font-size: 17pt; margin-left: 5px; -webkit-text-fill-color: red; margin-top: -60px; margin-bottom: -60px;">
+        để tính toán
+    </p>
+    </p>
+    
+        <div id="inputs" >
+            <label>Nhập khoảng cách giữa 2 bản phẳng <em style="-webkit-text-fill-color: red;">(d)</em>:
+                <input type="number" id="d">(m)<br>
+            </label>
+
+            <label>Nhập hiệu điện thế của 2 bản phẳng <em style="-webkit-text-fill-color: red;">(U)</em>:
+                <input type="number" id="u">(V)<br>
+            </label>
+
+            <label>Nhập tốc độ ban đầu của điện tích <em style="-webkit-text-fill-color: red;">(v&#8320;)</em>:
+                <input type="number" id="v">(m/s)<br>
+            </label>
+
+            <!--<label>Nhập khối lượng của điện tích <em style="-webkit-text-fill-color: red;">(m)</em>: 
+        <input type="text"  id="m">(Kg)<br>
+        </label>-->
+
+            <label>Nhập độ lớn lực điện tác dụng <em style="-webkit-text-fill-color: red;">(F)</em>:
+                <input type="text" id="f">(N)<br>
+            </label>
+
+            <label>Nhập độ lớn của cường độ điện trường <em style="-webkit-text-fill-color: red;">(E)</em>:
+                <input type="text" id="e">(V/m)
+            </label>
+
+            <button onclick="ptcd(event)" type="margin-top: -100px">Tính toán</button>
+    
+    <div style=" padding: 1px; margin-left: 0px; display: inline-block; display: flex;justify-content: center;align-items: center; width: 100%;">
+        <div id="result" style="z-index: 2;"></div>
+    </div>
+    </div>
+
+    <script>
+        function ptcd(event) {
+            event.preventDefault();
+            var d = (document.getElementById("d").value || 0);
+            var u = (document.getElementById("u").value || 0);
+            //var m=(document.getElementById("m").value.split("x10^").map(Number)||Number(document.getElementById("m").value)||0);
+            var f = (document.getElementById("f").value.split("x10^").map(Number) || Number(document.getElementById("f").value) || 0);
+            var e = (document.getElementById("e").value.split("x10^").map(Number) || Number(document.getElementById("e").value) || 0);
+            var k1 = 0;
+            var k2 = 0;
+            var v = (document.getElementById("v").value || 0);
+
+            var q1 = (-1.6);
+            var q2 = (-19);
+            var m1 = 9.1;
+            var m2 = -31;
+            var f1 = (f[0] || 0);
+            var f2 = (f[1] || 0);
+            var e1 = (e[0] || 0);
+            var e2 = (e[1] || 0);
+            var ds1 = [d, u, q1, q2, m1, m2, f1, f2, e1, e2]
+            //ĐỐI VỚI ĐIỆN TÍCH ÂM
+            for (i = 0; i < 5; i++) {
+                //Xử lí dữ liệu
+                if (u !== 0 && d !== 0 && f1 * (10 ** f2) !== (-q1 * (10 ** q2) * (u / d))) {
+                    f1 = -q1 * (u / d);
+                    f2 = (q2);
+                }
+                if (f1 !== 0 && d !== 0 && u !== (-f1 * (d / q1)) * 10 ** (f2 - q2)) {
+                    u = (-f1 * (d / q1)) * 10 ** (f2 - q2);
+                }
+                if (u !== 0 && f1 !== 0 && d !== (-q1 * (u / f1)) * 10 ** (q2 - f2)) {
+                    d = (-q1 * (u / f1)) * 10 ** (q2 - f2);
+                }
+
+                if (u !== 0 && d !== 0 && e1 !== (u / d)) {
+                    e1 = u / d;
+                }
+                if (u !== 0 && e1 !== 0 && d !== (u / e1)) {
+                    d = u / e1;
+                }
+                if (e1 !== 0 && d !== 0 && u !== (e1 * d)) {
+                    u = e1 * d;
+                }
+
+            }
+            var ptcd = 0;
+            if (v !== 0 && q1 !== 0 && u !== 0 && m1 !== 0 && d !== 0) {
+                ptcd = -(1 / 2) * (((q1 * (10 ** q2)) * u) / ((m1 * (10 ** m2)) * d)) * (1 / (v ** 2));
+            }
+            var ds2 = [d, u, q1, q2, m1, m2, f1, f2, e1, e2]
+            var dsk = []
+            for (i = 0; i < ds1.length; i++) {
+                dsk.push(k1)
+                if (String(ds1[i]) !== "0" && String(ds2[i]) !== "0" && (parseFloat(ds1[i]) - parseFloat(ds2[i]) > 0.0001 || parseFloat(ds2[i]) - parseFloat(ds1[i]) > 0.0001)) {
+                    k1++;
+                    break
+                }
+
+
+            }
+            
+            console.log(ds1)
+            console.log(ds2)
+            var ds3 = []
+            ds3.push(d);
+            ds3.push(u);
+
+            if (q2 !== 0) {
+                ds3.push(String(q1) + "x10^" + String(q2));
+            }
+            else { ds3.push(String(q1)) }
+            if (m2 !== 0) {
+                ds3.push(String(m1) + "x10^" + String(m2));
+            }
+            else { ds3.push(String(m1)) }
+            if (f2 !== 0) {
+                ds3.push(String(f1.toFixed(3)) + "x10^" + String(f2));
+            }
+            else { ds3.push(String(f1)) }
+            if (e2 !== 0) {
+                ds3.push(String(e1.toFixed(3)) + "x10^" + String(e2));
+            }
+            else { ds3.push(String(e1.toFixed(3))) }
+
+            var dst = [d, u, q1, m1, f1, e1];
+            for (a = 0; a < dst.length; a++) {
+                if (String(dst[a]) !== "0") {
+                    k2++;
+                }
+            } 
+            u = parseFloat(u)
+            var k3=0;
+            for(i=0;i<ds1.length;i++){
+                if (Math.abs(parseFloat(ds1[i])-parseFloat(ds2[i]))>0.0001){
+                    k3++;
+                }
+            }
+            while (true) {
+                if (k1 !== 0) {
+                    alert("Mâu thuẫn dữ liệu")
+                    document.getElementById("result").innerHTML ="";
+                    break
+                }
+                if (k2 === 2) {
+                    alert("Không thể tính toán với dữ liệu trống!")
+                    document.getElementById("result").innerHTML ="";
+                    break
+                }
+                if (k3===0){
+                    alert("Không đủ dữ liệu để tính toán")
+                    document.getElementById("result").innerHTML ="";
+                    break
+                }
+                document.getElementById("result").innerHTML = "Khoảng cách giữa 2 bản phẳng là: " + d + "m<br>" +
+                    "Hiệu điện thế giữa hai bản phẳng là: " + u.toFixed(3) + "V<br> Khối lượng của điện tích là: " + ds3[3] + "Kg<br> Độ lớn lực điện tác dụng là: " + ds3[4] +
+                    "N<br> Độ lớn của cường độ điện trường là: " + ds3[5] + "V/m<br>" + "PHƯƠNG TRÌNH CHUYỂN ĐỘNG LÀ: y=" + (ptcd / (10 ** 8)) + "\u2078 x\u00B2";
+                break
+            }
+            return false;
+
+        }
+    </script>
+
+
+</body>
+
+</html>

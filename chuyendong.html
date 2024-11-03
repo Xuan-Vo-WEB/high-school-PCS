@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Đo tốc độ vật chuyển động thẳng</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>  
+<style>
+    body {
+        background: #ffffff url("anh/ĐO TỐC ĐỘ VẬT CHUYỂN ĐỘNG THẲNG.jpg") no-repeat fixed center; 
+        background-size: 100%;
+    }
+    select {
+        width: 50px; /* Độ rộng của ô select */
+        height: 25px; /* Độ cao của ô select */
+        margin-top: 5px;
+        font-size: 18px; /* Cỡ chữ của ô select */
+        font-family: 'Times New Roman', Times, serif;
+    }
+    input {
+        height: 20px;
+        width: 350px;
+        display: inline-block;
+    }
+
+    .box{
+        display: inline-block;
+        justify-content:center;
+        align-items: center;
+        width: 100px;
+        border: none;
+        font-family: 'Times New Roman', Times, serif, Helvetica, sans-serif;
+        font-weight: bold;
+        text-align: center;
+        margin-left: 20px;
+    }
+    li{
+        margin-top: -10px;
+    }
+    .button0 {
+            display: inline-block;
+            justify-content:center;
+            align-items: center;
+            width: auto;
+            height: 20px;
+            border-radius:2px;
+            padding: 10px 20px;
+            margin-left: 20px;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            cursor: pointer;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid black;
+        }
+/*D:/CODE/YOUNG/giải lí/*/
+</style>
+<body>
+    <div class="button0" onclick="window.location.href = 'trangchu.html';">TRANG CHỦ</div>
+    <div class="button0" onclick="window.location.href = 'lop10.html';">LỚP 10</div>
+    <div class="button0" onclick="window.location.href = 'lop11.html';">LỚP 11/12</div><br><br>
+    <div id="inputs">
+        (*Lưu ý* Dữ liệu đầu vào mỗi số cách nhau bởi dấu cách!)<br>
+        <label>Nhập các giá trị đo đường kính viên bi: </label>
+        <input type="text" id="dk">(cm)<br>
+
+        <label>Nhập độ chia nhỏ nhất của thước đo: </label>
+        <input type="number" id="dd">(cm)<br>
+
+        <label>Nhập các giá trị đo thời gian: </label>
+        <input type="text" id="t">(s)<br>
+
+        <label>Nhập sai số dụng cụ đo thời gian: </label>
+        <input type="number" id="st">(s)
+
+        <button onclick="chuyendong()" type="margin-top: -100px">Tính toán</button>
+        <div style=" padding: 1px; margin-left: 0px; display: inline-block; display: flex;justify-content: center;align-items: center;" >
+            <div id="result" style="z-index: 2;"></div>
+        </div>
+        <script>
+            function chuyendong() {
+                var a=((document.getElementById("dk").value)||"0");
+                var b=((document.getElementById("t").value)||"0");
+                var ssdcdd=((parseFloat(document.getElementById("dd").value))/2||0);
+                var ssdctg=((parseFloat(document.getElementById("st").value))/2||0);
+                var dktb=0;
+                var ssdk=0;
+                var tgtb=0;
+                var tocdotucthoi=0;
+                var saisotuyetdoicuav=0;
+                
+                var dsdv=[a,b,ssdcdd,ssdctg,ssdk,tgtb,tocdotucthoi,saisotuyetdoicuav];
+                    var dsdk=a.split(" ").map(Number);
+                    var dstg=b.split(" ").map(Number);
+                    var dodaia=dsdk.length;
+                    var dodaib=dstg.length;
+                    var sumdk=0;
+                    var sumt=0;
+                    
+                    for(k=0; k<dodaia; k++){
+                        sumdk+=dsdk[k]
+                    }
+                    for (t=0; t<dodaib;t++){
+                        sumt+=dstg[t]
+                    }
+                    var dktb=sumdk/dodaia;
+                    var tgtb=sumt/dodaib;
+                    var dsssdk=[]
+                    var dssstg=[]
+                    var sumssdk=0;
+                    var sumsstg=0;
+                    for (k=0;k<dodaia;k++){
+                        dsssdk.push(Math.abs(dktb-dsdk[k]))
+                        sumssdk+=Math.abs(dktb-dsdk[k])
+                    }
+                    for (t=0;t<dodaib;t++){
+                        dssstg.push(Math.abs(tgtb-dstg[t]))
+                        sumsstg+=Math.abs(tgtb-dstg[t])
+                    }
+                    //document.getElementById("result").innerHTML=dsdk+" "+dstg+" "+dodaia+" "+dodaib;
+                    var ssdktb= sumssdk/dodaia;
+                    var sstgtb=sumsstg/dodaib;
+                    var ssdk=ssdktb+ssdcdd;
+                    var sstg=ssdctg+sstgtb;
+
+                    var tocdotucthoi=dktb/tgtb;
+                    var sstuongdoitocdo=(ssdk/dktb)+(sstg/tgtb);
+                    var saisotuyetdoicuav=(sstuongdoitocdo*(dktb/tgtb))/100;
+                var dsdr=[a,b,ssdcdd,ssdctg,ssdk,tgtb,tocdotucthoi,saisotuyetdoicuav];
+                let k1=0;
+                let k2=0;
+                let k3=0;
+                for (j=0; j<dsdr.length;j++){
+                    if (dsdr[j]===Infinity){
+                        dsdr[j]="0";
+                    }
+                    if (String(dsdr[j])==="NaN"){
+                        dsdr[j]="0"
+                    }
+                }
+                console.log(dsdv);
+                console.log(dsdr);
+                for (i=0; i<dsdr.length; i++){
+                    if (String(dsdv[i])!=="0"){k1+=1}
+                    if (String(dsdv[i])==="0" && String(dsdr[i])!=="0"){k2++}
+                    if (String(dsdv[i])!==String(dsdr[i]) && String(dsdv[i])!=="0"){
+                        k3++;
+                    }
+                }
+                if (k1===0){
+                    alert("Không thể để dữ liệu trống!")
+                    document.getElementById("result").innerHTML="";
+                }
+                else if(k2===0){
+                    alert("Không đủ dữ liệu để tính toán!")
+                    document.getElementById("result").innerHTML="";
+                }
+                else if(k3!==0){
+                    alert("Mâu thuẫn dữ liệu")
+                    document.getElementById("result").innerHTML="";
+                }
+                else{
+                    document.getElementById("result").innerHTML="Đường kính trung bình: "+dktb.toFixed(3)+" cm <br> Sai số (\u2206d): "+ssdk.toFixed(3)+" cm <br> Thời gian trung bình: "+tgtb.toFixed(3)+" s <br> Tốc độ tức thời: "+tocdotucthoi.toFixed(3)+" cm/s <br> Sai số (\u2206v): "+saisotuyetdoicuav.toFixed(3)+" cm/s";
+                }
+                
+
+                
+            }
+        </script>
+    </div> 
+    
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TH ĐO GIA TỐC RƠI TỰ DO</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>  
+<style>
+    body {
+        background: #ffffff url("anh/GIA TỐC RƠI TỰ DO.jpg") no-repeat fixed center; 
+        background-size: 100%;
+    }
+    select {
+        width: 50px; /* Độ rộng của ô select */
+        height: 25px; /* Độ cao của ô select */
+        margin-top: 5px;
+        font-size: 18px; /* Cỡ chữ của ô select */
+        font-family: 'Times New Roman', Times, serif;
+    }
+    input {
+        height: 20px;
+        width: 350px;
+        display: inline-block;
+    }
+
+    .box{
+        display: inline-block;
+        justify-content:center;
+        align-items: center;
+        width: 100px;
+        border: none;
+        font-family: 'Times New Roman', Times, serif, Helvetica, sans-serif;
+        font-weight: bold;
+        text-align: center;
+        margin-left: 20px;
+    }
+    li{
+        margin-top: -10px;
+    }
+    .button0 {
+            display: inline-block;
+            justify-content:center;
+            align-items: center;
+            width: auto;
+            height: 20px;
+            border-radius:2px;
+            padding: 10px 20px;
+            margin-left: 20px;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            cursor: pointer;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid black;
+        }
+/*D:/CODE/YOUNG/giải lí/*/
+</style>
+<body>
+    <div class="button0" onclick="window.location.href = 'trangchu.html';">TRANG CHỦ</div>
+    <div class="button0" onclick="window.location.href = 'lop10.html';">LỚP 10</div>
+    <div class="button0" onclick="window.location.href = 'lop11.html';">LỚP 11/12</div><br><br>
+    <div id="inputs">
+        (Bài thực hành này dựa trên bài thực hành ở SGK Lí 10 CTST!)<br>
+        *Lưu ý* Khi nhập dữ liệu các số liệu cách nhau bởi dấu cách <br>
+                và dấu thập phân thể hiện bằng dấu "."! Phải nhập đủ các giá trị để tính toán<br>
+        <label>Nhập lần lượt nhiều nhất 3 giá trị độ dịch chuyển</label><br>
+
+        <label>Nhập các giá trị độ dịch chuyển: </label>
+        <input type="text" id="dodichchuyen"> (m)<br> 
+
+        <label>Nhập các giá trị thời gian của vật 1: </label>
+        <input type="text" id="thoigian1"> (s)<br>
+        
+        <label>Nhập các giá trị thời gian của vật 2: </label>
+        <input type="text" id="thoigian2"> (s)<br>
+
+        <label>Nhập các giá trị thời gian của vật 3: </label>
+        <input type="text" id="thoigian3"> (s)<br>
+
+        <label>Nhập sai số dụng cụ đo thời gian: </label>
+        <input type="number" id="ssdc"><br>
+        <button onclick="roitudo()" type="margin-top: -100px">Tính toán</button>
+        <div style=" padding: 1px; margin-left: 0px; display: inline-block; display: flex;justify-content: center;align-items: center;" >
+            <div id="result" style="z-index: 2;"></div>
+        </div>
+        <script>
+            function roitudo(){
+                function sum(numbers) {
+                    let total = 0;
+                    for (let i = 0; i < numbers.length; i++) {
+                        total += numbers[i]
+                    }
+                    return total;
+                }
+                function sumss(ds,tb) {
+                    let total=0;
+                    for (let i=0;i<ds.length;i++){
+                        total+=Math.abs(tb-ds[i])
+                    }
+                    return total;
+                }
+                var bienloai=0;
+                var dsdodichchuyen=((document.getElementById("dodichchuyen").value).split(" ").map(Number)||0);
+                var dstg1=((document.getElementById("thoigian1").value).split(" ").map(Number)||0);
+                var dstg2=((document.getElementById("thoigian2").value).split(" ").map(Number)||0);
+                var dstg3=((document.getElementById("thoigian3").value).split(" ").map(Number)||0);
+                var ssdc=((parseFloat(document.getElementById("ssdc").value))||0);
+                
+                if(sum(dsdodichchuyen)===0){
+                    alert("Không thể để dữ liệu trống")
+                    document.getElementById("result").innerHTML="";
+                }
+                else if(dsdodichchuyen.length>=1 && sum(dstg1)===0){
+                    alert("Không thể để dữ liệu trống")
+                    document.getElementById("result").innerHTML="";
+                }
+                else if(dsdodichchuyen.length>=2 && sum(dstg2)===0){
+                    alert("Không thể để dữ liệu trống")
+                    document.getElementById("result").innerHTML="";
+                }
+                else if(dsdodichchuyen.length>=3 && sum(dstg3)===0){
+                    alert("Không thể để dữ liệu trống")
+                    document.getElementById("result").innerHTML="";
+                }
+                else{
+                var d1=dsdodichchuyen[0];
+                
+                var tgtb1=sum(dstg1)/dstg1.length;
+                var sstgr1=sumss(dstg1,tgtb1)/dstg1.length+ssdc;
+                var gtrtd1=((2*d1)/tgtb1**2||0);
+                
+
+                var d2=dsdodichchuyen[1];
+                var tgtb2=sum(dstg2)/dstg2.length;
+                var sstgr2=sumss(dstg2,tgtb2)/dstg2.length+ssdc;
+                var gtrtd2=((2*d2)/tgtb2**2||0);
+
+
+                var d3=dsdodichchuyen[2];
+                var tgtb3=sum(dstg3)/dstg3.length;
+                var sstgr3=sumss(dstg3,tgtb3)/dstg3.length+ssdc;
+                var gtrtd3=((2*d3)/tgtb3**2||0);
+
+                var gtrtdtb=(gtrtd1+gtrtd2+gtrtd3)/3;
+                var dentattb=(sstgr1+sstgr2+sstgr3)/3;
+                var tbtgtb=(tgtb1+tgtb2+tgtb3)/3;
+                var ssgtrtd=2*gtrtdtb*(dentattb/tbtgtb);
+                //document.getElementById("result").innerHTML=dstg1+" "+dstg2+" "+dstg3+" "+d1+" "+d2+" "+d3;
+                document.getElementById("result").innerHTML="Lần 1: Thời gian trung bình: "+tgtb1.toFixed(4)+" s; \u2206t: "+sstgr1.toFixed(5)+" s; g: "+gtrtd1.toFixed(3)+" m/s\^2 <br> Lần 2: Thời gian trung bình: "+
+                tgtb2.toFixed(4)+" s; \u2206t: "+sstgr2.toFixed(5)+" s; g: "+gtrtd2.toFixed(3)+" m/s^2 <br> Lần 3: Thời gian trung bình: "+tgtb3.toFixed(4)+" s; \u2206t: "+sstgr3.toFixed(5)+" s; g: "+gtrtd3.toFixed(3)+" m/s^2 <br> Gia tốc rơi tự do trung bình: "+gtrtdtb.toFixed(3)+" m/s^2 <br> Sai số của gia tốc rơi tự do: "+
+                ssgtrtd.toFixed(3)+" m/s^2 <br> KẾT QUẢ ĐO: " +gtrtdtb.toFixed(3)+" \u00B1 "+ssgtrtd.toFixed(3)+" m/s^2";
+                }}
+        </script>
+    </div>
+</body>
+</html>

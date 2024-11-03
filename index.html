@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cssdn/reset.css">
+    <link rel="stylesheet" href="cssdn/app.css">
+    <link rel=” stylesheet” href=”https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css”>    
+    <title>TRANG ĐĂNG NHẬP</title>
+</head>
+<body>
+    <div id="wrapper">
+        <form action="/login" id="form-login" method="post">
+            <h1 class="from-heading" style="text-align: center; color: #ffffff;">ĐĂNG NHẬP</h1>
+            <div class="form-group">
+                <img  class="fas-fa-user" src="anhdangnhap/user-solid.svg"></img>
+                <input id="username" type="text" class="form-input" placeholder="Tên đăng nhập">
+
+            </div>
+            <div class="form-group">
+                <img class="fas-fa-pas" src="anhdangnhap/lock-solid.svg">
+                <input id="password" type="password" class="form-input" placeholder="Password">
+                
+            </div>
+            <a href="dangki.html" class="dangki-link" style="color: #ffffff;margin-left: 300px;">ĐĂNG KÍ</a>
+            <button onclick="login()" id="btnsignup" class="form-submit">Đăng nhập</button></br>
+            <p style="text-align: center; color: #f6ff00; font-size: 17px; text-shadow:0px 0px 20px 2px #ffffff;">*Lưu ý* Đăng nhập với tài khoản đã đăng kí gần nhất!</p>
+            <div style="text-align: center;">
+                <a style="color: #ffffff; text-align: center;" href="gioithieu.html">MÔ TẢ, GIỚI THIỆU VÀ HƯỚNG DẪN SỬ DỤNG</a>
+            </div>
+        </form></br>
+        
+    </div>
+
+        
+    
+    <script src="anhdangnhap/dangnhap.js"></script>
+</body>
+</html>
